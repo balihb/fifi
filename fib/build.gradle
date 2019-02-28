@@ -14,7 +14,7 @@ buildscript {
           }
     }
     dependencies { 
-        classpath "org.openapitools:openapi-generator-gradle-plugin:3.3.4"
+        classpath "org.openapitools:openapi-generator-gradle-plugin:4.0.0-beta2"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE"
         classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
         }
@@ -48,9 +48,14 @@ repositories {
     jcenter()
 }
 
+openApiValidate {
+    inputSpec = "${sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml".toString()
+}
+
+
 openApiGenerate {
     generatorName = "spring"
-    //verbose = true
+    verbose = true
     inputSpec = "${sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml"
     outputDir = "${buildDir}/generated"
     apiPackage = "balihb.fifi.fib.api"
@@ -63,16 +68,64 @@ openApiGenerate {
     ]
 }
 
+task openApiGenerateModel(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "spring"
+    //verbose = true
+    inputSpec = "${sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml".toString()
+    outputDir = "${buildDir}/generated/model"
+    apiPackage = "balihb.fifi.fib.api"
+    invokerPackage = "balihb.fifi.fib.invoker"
+    modelPackage = "balihb.fifi.fib.model"
+    generateApiDocumentation = false
+    generateModelDocumentation = true
+    generateModelTests = true
+    generateApiTests = false
+    withXml = false
+    configOptions = [
+        dateLibrary: "java8",
+        interfaceOnly: true
+        //apiFirst: true
+    ]
+    systemProperties = [
+        apis: "false",
+        models: ""
+    ]
+}
+
+task openApiGenerateApi(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask){
+    generatorName = "spring"
+    //verbose = true
+    inputSpec = "${sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml".toString()
+    outputDir = "${buildDir}/generated/api"
+    apiPackage = "balihb.fifi.fib.api"
+    invokerPackage = "balihb.fifi.fib.invoker"
+    modelPackage = "balihb.fifi.fib.model"
+    generateApiDocumentation = false
+    generateModelDocumentation = true
+    generateModelTests = true
+    generateApiTests = false
+    withXml = false
+    configOptions = [
+        dateLibrary: "java8",
+        interfaceOnly: true
+        //apiFirst: true
+    ]
+    systemProperties = [
+        apis: "",
+        models: "false"
+    ]
+}
+
 sourceSets {
     main {
         java {
-            srcDirs += ["$buildDir/generated/src/main/java"]
+            srcDirs += ["$buildDir/generated/model/src/main/java"]
         }
     }
 }
 
-compileJava.dependsOn tasks.openApiGenerate
-eclipseClasspath.dependsOn tasks.openApiGenerate
+//compileJava.dependsOn tasks.openApiGenerate
+//eclipseClasspath.dependsOn tasks.openApiGenerate
 
 task getApiYamlPath {
     doLast {
