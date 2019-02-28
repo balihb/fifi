@@ -1,0 +1,3 @@
+rootProject.name = 'fifi'
+include ':fib'
+include ':fib-timer'

@@ -1,0 +1,25 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+
+# IntelliJ project files
+.idea
+*.iml
+out/
+
+# Eclipse/STS
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.checkstyle
+.pmd
+.sonar
+.apt_generated
+bin/
+
+# gradle
+.gradle
+build
+classes

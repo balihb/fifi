@@ -1,0 +1,54 @@
+---
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: FibNumTimed
+  license:
+    name: MIT
+paths:
+  /fib-timed/{fibNum}:
+    get:
+      summary: get ntf fib num
+      operationId: getFibNum
+      parameters:
+        - name: fibNum
+          in: path
+          required: true
+          description: nth fib num
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FibNum"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    FibNum:
+      required:
+        - num
+      properties:
+        num:
+          type: integer
+          format: int64
+        delta:
+          type: string
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
