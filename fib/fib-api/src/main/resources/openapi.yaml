@@ -5,6 +5,9 @@ info:
   title: FibNum
   license:
     name: MIT
+servers:
+- url: http://localhost:8080
+  description: Local server
 paths:
   /fib/{fibNum}:
     get:

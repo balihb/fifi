@@ -23,14 +23,30 @@ apply plugin: 'org.openapi.generator'
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 
-dependencies {
-
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly project(':fib:fib-impl')
-
-    testImplementation 'junit:junit:4.12'
-}
-
-mainClassName = 'balihb.fifi.app.Application'
+mainClassName = 'balihb.fifi.aws.Application'
 
 repositories { jcenter() }
+
+dependencies {
+    implementation (
+        'org.springframework.boot:spring-boot-starter-web',
+        
+        'com.amazonaws.serverless:aws-serverless-java-container-spring:1.3.1',
+        //'com.amazonaws:aws-lambda-java-core:1.2.0',
+        'io.symphonia:lambda-logging:1.0.3'
+    )
+    implementation project(':fib:fib-impl')
+    testCompile("junit:junit")
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from(configurations.compileClasspath) {
+            exclude 'tomcat-embed-*'
+        }
+    }
+}
+
+build.dependsOn buildZip
