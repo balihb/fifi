@@ -1,3 +1,6 @@
 rootProject.name = 'fifi'
 include ':fib'
+include ':fib:fib-api'
+include ':fib:fib-impl'
 include ':fib-timer'
+include ':war'
