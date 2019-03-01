@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
@@ -14,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import balihb.fifi.fib.impl.FibImpl;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"balihb.fifi.fib.impl", "balihb.fifi.fib.api"})
-//@Import({ FibImpl.class })
+//@ComponentScan(basePackages = {"balihb.fifi.fib.impl", "balihb.fifi.fib.api"})
+@Import({ FibImpl.class })
 public class Application extends SpringBootServletInitializer {
     @Bean
     public HandlerMapping handlerMapping() {

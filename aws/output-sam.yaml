@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Example Pet Store API written with SpringBoot with the aws-serverless-java-container
+  library
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Outputs:
+  FifiApi:
+    Description: URL for application
+    Export:
+      Name: FifiApi
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/fifi
+Resources:
+  FifiFunction:
+    Properties:
+      CodeUri: s3://fifi-aws/c4fcdc07a2686ecd0fb4f6bfaa4842a6
+      Events:
+        GetResource:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: balihb.fifi.aws.StreamLambdaHandler::handleRequest
+      MemorySize: 1512
+      Policies: AWSLambdaBasicExecutionRole
+      Runtime: java8
+      Timeout: 60
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

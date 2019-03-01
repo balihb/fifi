@@ -40,10 +40,13 @@ dependencies {
 }
 
 task buildZip(type: Zip) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'aws'
+    //archiveFileName = "fifi-aws.zip"
     from compileJava
     from processResources
     into('lib') {
-        from(configurations.compileClasspath) {
+        from(configurations.runtimeClasspath) {
             exclude 'tomcat-embed-*'
         }
     }
