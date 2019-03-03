@@ -38,7 +38,7 @@ configurations {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
-    api project(':fib:fib-api')
+    api project(':fib-timer:fib-timer-api')
 
     testImplementation 'junit:junit:4.12'
 }
@@ -54,11 +54,11 @@ repositories {
 openApiGenerate {
     generatorName = "spring"
     verbose = false
-    inputSpec = "${project(':fib:fib-api').sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml"
+    inputSpec = "${project(':fib-timer:fib-timer-api').sourceSets.main.resources.srcDirs.find{ file("${it}/openapi.yaml").exists() }}/openapi.yaml"
     outputDir = "${buildDir}/generated"
-    apiPackage = "balihb.fifi.fib.api"
-    invokerPackage = "balihb.fifi.fib.invoker"
-    modelPackage = "balihb.fifi.fib.model"
+    apiPackage = "balihb.fifi.fib_timer.api"
+    invokerPackage = "balihb.fifi.fib_timer.invoker"
+    modelPackage = "balihb.fifi.fib_timer.model"
     configOptions = [
         dateLibrary: "java8",
         interfaceOnly: true

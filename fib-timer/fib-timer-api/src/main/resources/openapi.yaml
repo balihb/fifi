@@ -5,11 +5,14 @@ info:
   title: FibNumTimed
   license:
     name: MIT
+servers:
+  - url: http://localhost:8080
+    description: Local server
 paths:
   /fib-timed/{fibNum}:
     get:
-      summary: get ntf fib num
-      operationId: getFibNum
+      summary: get ntf fib num with calc time
+      operationId: getFibNumTimer
       parameters:
         - name: fibNum
           in: path
@@ -34,6 +37,7 @@ paths:
 components:
   schemas:
     FibNum:
+      type: object
       required:
         - num
       properties:
@@ -43,6 +47,7 @@ components:
         delta:
           type: string
     Error:
+      type: object
       required:
         - code
         - message
