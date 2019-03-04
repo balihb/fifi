@@ -21,7 +21,7 @@ public class AwsFibApiCaller implements FibApiCaller {
     }
 
     public interface AwsFibApiCallerService {
-        @LambdaFunction(functionName = "fibNum")
+        @LambdaFunction(functionName = "Fib")
         FibApiResponse call(FibApiRequest input);
     }
 }
