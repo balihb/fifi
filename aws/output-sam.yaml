@@ -11,7 +11,7 @@ Resources:
     Properties:
       Handler: balihb.fifi.fib.aws.StreamLambdaHandler::handleRequest
       Runtime: java8
-      CodeUri: s3://fifi-aws/4dc84ffbe78cc691b298c7df6750f8bb
+      CodeUri: s3://fifi-aws/9823e8d5d1164fb5ef743b8f6eca69af
       MemorySize: 1512
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 60
@@ -19,14 +19,14 @@ Resources:
         GetResource:
           Type: Api
           Properties:
-            Path: /fib/{proxy+}
+            Path: /fib
             Method: any
   Fibtimer:
     Type: AWS::Serverless::Function
     Properties:
       Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
       Runtime: java8
-      CodeUri: s3://fifi-aws/b90d9a3286557e31dc3278d35728945d
+      CodeUri: s3://fifi-aws/f4dd78c7400746c57fa7c947c60ef4c4
       MemorySize: 1512
       Policies:
       - AWSLambdaBasicExecutionRole

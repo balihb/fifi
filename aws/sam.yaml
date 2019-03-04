@@ -21,7 +21,7 @@ Resources:
         GetResource:
           Type: Api
           Properties:
-            Path: /fib/{proxy+}
+            Path: /fib
             Method: any
 
   Fibtimer:

@@ -1,13 +1,15 @@
 package balihb.fifi.fib.aws;
 
-public class FibApiRequest {
-    private Long fibNum;
+import balihb.fifi.fib.model.FibNum;
 
-    public Long getFibNum() {
-        return fibNum;
+public class FibApiRequest {
+    private Long num;
+
+    public Long getNum() {
+        return num;
     }
 
-    public void setFibNum(Long value) {
-        fibNum = value;
+    public void setNum(FibNum value) {
+        num = value.getNum();
     }
 }

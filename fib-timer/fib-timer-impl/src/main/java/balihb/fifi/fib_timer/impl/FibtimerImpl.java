@@ -31,8 +31,14 @@ public class FibtimerImpl implements FibtimerApi {
 //            return ResponseEntity.ok(fibNumDelta);
 //        }
 //        return new ResponseEntity<>(fibNumResp.getHeaders(), fibNumResp.getStatusCode());
+        FibNum newFib = new FibNum().num(fibNum);
         long startTime = System.nanoTime();
-        FibNum fibNumResp = fibApiCaller.getFibNum(fibNum);
+        FibNum fibNumResp = null;
+        try {
+            fibNumResp = fibApiCaller.getFibNum(newFib);
+        } catch (Exception e) {
+            
+        }
         long endTime = System.nanoTime();
         FibNumDelta fibNumDelta = new FibNumDelta();
         fibNumDelta.setDelta(endTime - startTime);
