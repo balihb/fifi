@@ -21,23 +21,27 @@ Resources:
         GetResource:
           Type: Api
           Properties:
-            Path: /{proxy+}
+            Path: /fib/{proxy+}
             Method: any
-    Fibtimer:
-      Type: AWS::Serverless::Function
-      Properties:
-        Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
-        Runtime: java8
-        CodeUri: build/distributions/fifi-fibtimer-0.0.0-local.zip
-        MemorySize: 1512
-        Policies: AWSLambdaBasicExecutionRole
-        Timeout: 60
-        Events:
-          GetResource:
-            Type: Api
-            Properties:
-              Path: /{proxy+}
-              Method: any
+
+  Fibtimer:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: build/distributions/fifi-fibtimer-0.0.0-local.zip
+      MemorySize: 1512
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - arn:aws:iam::486720684992:policy/fibtimer-can-call-fib
+        - AWSLambdaRole
+      Timeout: 60
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /fibtimer/{proxy+}
+            Method: any
 
 Outputs:
   FifiApi:

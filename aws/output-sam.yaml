@@ -1,30 +1,48 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
 Description: Example Pet Store API written with SpringBoot with the aws-serverless-java-container
   library
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
+Resources:
+  Fib:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: balihb.fifi.fib.aws.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: s3://fifi-aws/4dc84ffbe78cc691b298c7df6750f8bb
+      MemorySize: 1512
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 60
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /fib/{proxy+}
+            Method: any
+  Fibtimer:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: s3://fifi-aws/b90d9a3286557e31dc3278d35728945d
+      MemorySize: 1512
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - arn:aws:iam::486720684992:policy/fibtimer-can-call-fib
+      - AWSLambdaRole
+      Timeout: 60
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /fibtimer/{proxy+}
+            Method: any
 Outputs:
   FifiApi:
     Description: URL for application
-    Export:
-      Name: FifiApi
     Value:
       Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/fifi
-Resources:
-  FifiFunction:
-    Properties:
-      CodeUri: s3://fifi-aws/c4fcdc07a2686ecd0fb4f6bfaa4842a6
-      Events:
-        GetResource:
-          Properties:
-            Method: any
-            Path: /{proxy+}
-          Type: Api
-      Handler: balihb.fifi.aws.StreamLambdaHandler::handleRequest
-      MemorySize: 1512
-      Policies: AWSLambdaBasicExecutionRole
-      Runtime: java8
-      Timeout: 60
-    Type: AWS::Serverless::Function
-Transform: AWS::Serverless-2016-10-31
+    Export:
+      Name: FifiApi

@@ -1,6 +1,5 @@
 package balihb.fifi.fib.aws;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.services.lambda.invoke.LambdaFunction;
@@ -12,7 +11,7 @@ import balihb.fifi.fib.model.FibNum;
 @Service
 public class AwsFibApiCaller implements FibApiCaller {
 
-    public ResponseEntity<FibNum> getFibNum(Long fibNum) {
+    public FibNum getFibNum(Long fibNum) {
         AwsFibApiCallerService fibService = LambdaInvokerFactory.builder().build(AwsFibApiCallerService.class);
         FibApiRequest fibInput = new FibApiRequest();
         fibInput.setFibNum(fibNum);
@@ -21,7 +20,7 @@ public class AwsFibApiCaller implements FibApiCaller {
     }
 
     public interface AwsFibApiCallerService {
-        @LambdaFunction(functionName = "Fib")
+        @LambdaFunction(functionName = "ServerlessFifi-Fib-WC5PJAKE255B")
         FibApiResponse call(FibApiRequest input);
     }
 }

@@ -16,21 +16,28 @@ public class FibtimerImpl implements FibtimerApi {
 
     @Autowired
     private FibApiCaller fibApiCaller;
-    
+
     @Override
     public ResponseEntity<FibNumDelta> getFibNumTimer(Long fibNum) {
-        ResponseEntity<FibNum> fibNumResp;
+//        ResponseEntity<FibNum> fibNumResp;
+//        long startTime = System.nanoTime();
+//        fibNumResp = fibApiCaller.getFibNum(fibNum);
+//        long endTime = System.nanoTime();
+//        FibNumDelta fibNumDelta = new FibNumDelta();
+//        fibNumDelta.setDelta(endTime - startTime);
+//        if(fibNumResp.getStatusCode().is2xxSuccessful()) {
+//            fibNumDelta.setNum(fibNumResp.getBody().getNum());
+//            fibNumDelta.setDelta(endTime - startTime);
+//            return ResponseEntity.ok(fibNumDelta);
+//        }
+//        return new ResponseEntity<>(fibNumResp.getHeaders(), fibNumResp.getStatusCode());
         long startTime = System.nanoTime();
-        fibNumResp = fibApiCaller.getFibNum(fibNum);
+        FibNum fibNumResp = fibApiCaller.getFibNum(fibNum);
         long endTime = System.nanoTime();
         FibNumDelta fibNumDelta = new FibNumDelta();
         fibNumDelta.setDelta(endTime - startTime);
-        if(fibNumResp.getStatusCode().is2xxSuccessful()) {
-            fibNumDelta.setNum(fibNumResp.getBody().getNum());
-            fibNumDelta.setDelta(endTime - startTime);
-            return ResponseEntity.ok(fibNumDelta);
-        }
-        return new ResponseEntity<>(fibNumResp.getHeaders(), fibNumResp.getStatusCode());
+        fibNumDelta.setNum(fibNumResp.getNum());
+        return ResponseEntity.ok(fibNumDelta);
     }
 
 }

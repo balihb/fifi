@@ -5,13 +5,13 @@ import org.springframework.http.ResponseEntity;
 import balihb.fifi.fib.model.FibNum;
 
 public class FibApiResponse {
-    private ResponseEntity<FibNum> fibNum;
+    private FibNum fibNum;
     
-    public ResponseEntity<FibNum> getFibNum() {
+    public FibNum getFibNum() {
         return fibNum;
     }
 
-    public void setFibNum(ResponseEntity<FibNum> value) {
+    public void setFibNum(FibNum value) {
         fibNum = value;
     }
 }

@@ -10,7 +10,7 @@ import balihb.fifi.fib.model.FibNum;
 @Service
 public class InJvmFibApiCaller implements FibApiCaller {
     @Override
-    public ResponseEntity<FibNum> getFibNum(Long fibNum) {
-        return new FibImpl().getFibNum(fibNum);
+    public FibNum getFibNum(Long fibNum) {
+        return new FibImpl().getFibNum(fibNum).getBody();
     }
 }
