@@ -8,12 +8,12 @@ Globals:
     EndpointConfiguration: REGIONAL
 
 Resources:
-  FifiFunction:
+  Fib:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: balihb.fifi.aws.StreamLambdaHandler::handleRequest
+      Handler: balihb.fifi.fib.aws.StreamLambdaHandler::handleRequest
       Runtime: java8
-      CodeUri: build/distributions/fifi-aws-0.0.0-local.zip
+      CodeUri: build/distributions/fifi-fib-0.0.0-local.zip
       MemorySize: 1512
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 60
@@ -23,6 +23,21 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: any
+    Fibtimer:
+      Type: AWS::Serverless::Function
+      Properties:
+        Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
+        Runtime: java8
+        CodeUri: build/distributions/fifi-fibtimer-0.0.0-local.zip
+        MemorySize: 1512
+        Policies: AWSLambdaBasicExecutionRole
+        Timeout: 60
+        Events:
+          GetResource:
+            Type: Api
+            Properties:
+              Path: /{proxy+}
+              Method: any
 
 Outputs:
   FifiApi:

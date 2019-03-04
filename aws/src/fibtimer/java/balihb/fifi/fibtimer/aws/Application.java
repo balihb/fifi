@@ -1,4 +1,4 @@
-package balihb.fifi.aws;
+package balihb.fifi.fibtimer.aws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,11 +10,12 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import balihb.fifi.fib.impl.FibImpl;
+import balihb.fifi.fib.aws.AwsFibApiCaller;
+import balihb.fifi.fib_timer.impl.FibtimerImpl;
 
 @SpringBootApplication
 //@ComponentScan(basePackages = {"balihb.fifi.fib.impl", "balihb.fifi.fib.api"})
-@Import({ FibImpl.class })
+@Import({ FibtimerImpl.class, AwsFibApiCaller.class })
 public class Application extends SpringBootServletInitializer {
     @Bean
     public HandlerMapping handlerMapping() {

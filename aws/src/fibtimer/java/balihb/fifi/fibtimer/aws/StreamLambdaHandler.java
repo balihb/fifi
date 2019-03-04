@@ -1,4 +1,4 @@
-package balihb.fifi.aws;
+package balihb.fifi.fibtimer.aws;
 
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;
 import com.amazonaws.serverless.proxy.model.AwsProxyRequest;

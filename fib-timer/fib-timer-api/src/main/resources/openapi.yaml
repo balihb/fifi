@@ -2,14 +2,14 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: FibNumTimed
+  title: FibNumTimer
   license:
     name: MIT
 servers:
   - url: http://localhost:8080
     description: Local server
 paths:
-  /fib-timed/{fibNum}:
+  /fibtimer/{fibNum}:
     get:
       summary: get ntf fib num with calc time
       operationId: getFibNumTimer
@@ -27,7 +27,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FibNum"
+                $ref: "#/components/schemas/FibNumDelta"
         default:
           description: unexpected error
           content:
@@ -36,7 +36,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 components:
   schemas:
-    FibNum:
+    FibNumDelta:
       type: object
       required:
         - num
@@ -45,7 +45,8 @@ components:
           type: integer
           format: int64
         delta:
-          type: string
+          type: integer
+          format: int64
     Error:
       type: object
       required:

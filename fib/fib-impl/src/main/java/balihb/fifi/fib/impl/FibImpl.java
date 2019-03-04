@@ -13,7 +13,7 @@ public class FibImpl implements FibApi {
 
     @Override
     public ResponseEntity<FibNum> getFibNum(Long fibNum) {
-        return ResponseEntity.ok(new FibNum().num(10L));
+        return ResponseEntity.ok(new FibNum().num(15L));
     }
 
 }

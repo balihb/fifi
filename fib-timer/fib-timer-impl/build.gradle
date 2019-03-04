@@ -32,12 +32,24 @@ sourceSets {
 }
 
 configurations {
+    injvm
     injvmImplementation.extendsFrom implementation
+}
+
+task injvmJar(type:Jar) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'fib-impl-injvm'
+    from sourceSets.injvm.output
+}
+
+artifacts {
+    injvm injvmJar
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
+    api project(':fib:fib-api')
     api project(':fib-timer:fib-timer-api')
 
     testImplementation 'junit:junit:4.12'

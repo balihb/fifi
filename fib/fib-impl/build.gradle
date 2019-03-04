@@ -32,7 +32,18 @@ sourceSets {
 }
 
 configurations {
+    injvm
     injvmImplementation.extendsFrom implementation
+}
+
+task injvmJar(type:Jar) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'fib-impl-injvm'
+    from sourceSets.injvm.output
+}
+
+artifacts {
+    injvm injvmJar
 }
 
 dependencies {

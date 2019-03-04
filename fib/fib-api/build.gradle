@@ -36,7 +36,18 @@ sourceSets {
 }
 
 configurations {
+    aws
     awsImplementation.extendsFrom implementation
+}
+
+task awsJar(type:Jar) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'fib-api-aws'
+    from sourceSets.aws.output
+}
+
+artifacts {
+    aws awsJar
 }
 
 eclipse {
@@ -49,7 +60,6 @@ eclipse {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
-    awsImplementation 'org.springframework.boot:spring-boot-starter-web'
     awsImplementation 'com.amazonaws:aws-java-sdk-lambda'
 
     testImplementation 'junit:junit:4.12'

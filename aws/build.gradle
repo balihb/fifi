@@ -15,41 +15,85 @@ plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java'
     id 'eclipse'
-    id 'application'
-    id 'war'
 }
+
+ext { springBootVersion = '2.1.3.RELEASE' }
 
 apply plugin: 'org.openapi.generator'
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 
-mainClassName = 'balihb.fifi.aws.Application'
-
 repositories { jcenter() }
 
-dependencies {
-    implementation (
-        'org.springframework.boot:spring-boot-starter-web',
-        
-        'com.amazonaws.serverless:aws-serverless-java-container-spring:1.3.1',
-        //'com.amazonaws:aws-lambda-java-core:1.2.0',
-        'io.symphonia:lambda-logging:1.0.3'
-    )
-    implementation project(':fib:fib-impl')
-    testCompile("junit:junit")
-}
-
-task buildZip(type: Zip) {
-    archiveBaseName = 'fifi'
-    archiveAppendix = 'aws'
-    //archiveFileName = "fifi-aws.zip"
-    from compileJava
-    from processResources
-    into('lib') {
-        from(configurations.runtimeClasspath) {
-            exclude 'tomcat-embed-*'
-        }
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        mavenBom('com.amazonaws:aws-java-sdk-bom:1.11.510')
     }
 }
 
-build.dependsOn buildZip
+configurations {
+    fib.extendsFrom implementation
+    fintimer.extendsFrom implementation
+}
+
+sourceSets {
+    fib
+    fibtimer
+}
+
+dependencies {
+    implementation (
+            'org.springframework.boot:spring-boot-starter-web',
+
+            'com.amazonaws.serverless:aws-serverless-java-container-spring:1.3.1',
+            //'com.amazonaws:aws-lambda-java-core:1.2.0',
+            'io.symphonia:lambda-logging:1.0.3',
+            'com.amazonaws:aws-java-sdk-lambda'
+            )
+    fibImplementation (
+            'org.springframework.boot:spring-boot-starter-web',
+
+            'com.amazonaws.serverless:aws-serverless-java-container-spring:1.3.1',
+            //'com.amazonaws:aws-lambda-java-core:1.2.0',
+            'io.symphonia:lambda-logging:1.0.3',
+            'com.amazonaws:aws-java-sdk-lambda'
+            )
+    fibtimerImplementation (
+            'org.springframework.boot:spring-boot-starter-web',
+
+            'com.amazonaws.serverless:aws-serverless-java-container-spring:1.3.1',
+            //'com.amazonaws:aws-lambda-java-core:1.2.0',
+            'io.symphonia:lambda-logging:1.0.3',
+            'com.amazonaws:aws-java-sdk-lambda'
+            )
+
+    fibImplementation project(':fib:fib-impl')
+    fibtimerImplementation project(':fib-timer:fib-timer-impl')
+    fibtimerImplementation project(path: ":fib:fib-api", configuration: "aws")
+}
+
+task buildFibZip(type: Zip) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'fib'
+    //archiveFileName = "fifi-aws.zip"
+    from compileFibJava
+    from processFibResources
+    into('lib') {
+        from(configurations.fibRuntimeClasspath) { exclude 'tomcat-embed-*' }
+    }
+}
+
+task buildFibtimerZip(type: Zip) {
+    archiveBaseName = 'fifi'
+    archiveAppendix = 'fibtimer'
+    //archiveFileName = "fifi-aws.zip"
+    from compileFibtimerJava
+    from processFibtimerResources
+    into('lib') {
+        from(configurations.fibtimerRuntimeClasspath) { exclude 'tomcat-embed-*' }
+    }
+}
+
+build.dependsOn buildFibZip
+build.dependsOn buildFibtimerZip

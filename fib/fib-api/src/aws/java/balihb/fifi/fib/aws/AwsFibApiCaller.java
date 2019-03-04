@@ -1,12 +1,15 @@
 package balihb.fifi.fib.aws;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import com.amazonaws.services.lambda.invoke.LambdaFunction;
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory;
 
 import balihb.fifi.fib.FibApiCaller;
 import balihb.fifi.fib.model.FibNum;
 
+@Service
 public class AwsFibApiCaller implements FibApiCaller {
 
     public ResponseEntity<FibNum> getFibNum(Long fibNum) {

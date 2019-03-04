@@ -1,4 +1,4 @@
-package balihb.fifi.app;
+package balihb.fifi.fib.aws;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,25 +11,22 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import balihb.fifi.fib.impl.FibImpl;
-import balihb.fifi.fib_timer.impl.FibtimerImpl;
-import balihb.fifi.fib.injvm.InJvmFibApiCaller;
 
 @SpringBootApplication
-//@ComponentScan(basePackages = {"balihb.fifi"})
-@Import({ FibImpl.class, FibtimerImpl.class, InJvmFibApiCaller.class })
+//@ComponentScan(basePackages = {"balihb.fifi.fib.impl", "balihb.fifi.fib.api"})
+@Import({ FibImpl.class })
 public class Application extends SpringBootServletInitializer {
-  @Bean
-  public HandlerMapping handlerMapping() {
-      return new RequestMappingHandlerMapping();
-  }
+    @Bean
+    public HandlerMapping handlerMapping() {
+        return new RequestMappingHandlerMapping();
+    }
 
-  @Bean
-  public HandlerAdapter handlerAdapter() {
-      return new RequestMappingHandlerAdapter();
-  }
-  public static void main(String[] args) throws Exception {
-      new SpringApplication(Application.class).run(args);
-  }
+    @Bean
+    public HandlerAdapter handlerAdapter() {
+        return new RequestMappingHandlerAdapter();
+    }
+    public static void main(String[] args) throws Exception {
+        new SpringApplication(Application.class).run(args);
+    }
 
 }
-

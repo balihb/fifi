@@ -26,7 +26,9 @@ apply plugin: "io.spring.dependency-management"
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly project(':fib:fib-impl')
+    implementation project(':fib:fib-impl')
+    implementation project(':fib-timer:fib-timer-impl')
+    implementation project(path: ":fib:fib-impl", configuration: "injvm")
 
     testImplementation 'junit:junit:4.12'
 }
