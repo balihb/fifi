@@ -1,48 +1,48 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
 Description: Example Pet Store API written with SpringBoot with the aws-serverless-java-container
   library
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
+Outputs:
+  FifiApi:
+    Description: URL for application
+    Export:
+      Name: FifiApi
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/fifi
 Resources:
   Fib:
-    Type: AWS::Serverless::Function
     Properties:
-      Handler: balihb.fifi.fib.aws.StreamLambdaHandler::handleRequest
-      Runtime: java8
-      CodeUri: s3://fifi-aws/9823e8d5d1164fb5ef743b8f6eca69af
-      MemorySize: 1512
-      Policies: AWSLambdaBasicExecutionRole
-      Timeout: 60
+      CodeUri: s3://fifi-aws/9b7977ba18bb6b6da6a2e6b14bdf1534
       Events:
         GetResource:
-          Type: Api
           Properties:
-            Path: /fib
             Method: any
-  Fibtimer:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
+            Path: /fib
+          Type: Api
+      Handler: balihb.fifi.fib.aws.StreamLambdaHandler::handleRequest
+      MemorySize: 1512
+      Policies: AWSLambdaBasicExecutionRole
       Runtime: java8
-      CodeUri: s3://fifi-aws/f4dd78c7400746c57fa7c947c60ef4c4
+      Timeout: 60
+    Type: AWS::Serverless::Function
+  Fibtimer:
+    Properties:
+      CodeUri: s3://fifi-aws/72672e85f676edd97a3055007666551e
+      Events:
+        GetResource:
+          Properties:
+            Method: any
+            Path: /fibtimer/{proxy+}
+          Type: Api
+      Handler: balihb.fifi.fibtimer.aws.StreamLambdaHandler::handleRequest
       MemorySize: 1512
       Policies:
       - AWSLambdaBasicExecutionRole
       - arn:aws:iam::486720684992:policy/fibtimer-can-call-fib
       - AWSLambdaRole
+      Runtime: java8
       Timeout: 60
-      Events:
-        GetResource:
-          Type: Api
-          Properties:
-            Path: /fibtimer/{proxy+}
-            Method: any
-Outputs:
-  FifiApi:
-    Description: URL for application
-    Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/fifi
-    Export:
-      Name: FifiApi
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

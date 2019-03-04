@@ -1,6 +1,7 @@
 package balihb.fifi.fib.aws;
 
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext;
 import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
@@ -26,6 +27,9 @@ public class StreamLambdaHandler implements RequestStreamHandler {
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
+        if(context == null) {
+            context = new MockLambdaContext();
+        }
         handler.proxyStream(inputStream, outputStream, context);
     }
 
